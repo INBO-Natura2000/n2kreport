@@ -30,46 +30,56 @@ ON
 sql <- "
 "
 sql <- "
-WITH cteSpeciesGroup
+WITH cteAnalysis
 AS
 (
   SELECT
-    Scheme.Description AS Scheme,
-    SpeciesGroup.Description AS SpeciesGroup,
-    SpeciesGroup.ID AS SpeciesGroupID
+    sg.Scheme,
+    sg.SpeciesGroup,
+    an.ModelType,
+    an.AnalysisID
   FROM
-    Scheme
+  (
+    SELECT
+      Scheme.Description AS Scheme,
+      SpeciesGroup.Description AS SpeciesGroup,
+      SpeciesGroup.ID AS SpeciesGroupID
+    FROM
+      Scheme
+    INNER JOIN
+      SpeciesGroup
+    ON
+      Scheme.ID = SpeciesGroup.SchemeID
+  ) AS sg
   INNER JOIN
-    SpeciesGroup
+  (
+    SELECT
+      ModelType.Description AS ModelType,
+      Analysis.ID AS AnalysisID,
+      Analysis.SpeciesGroupID AS SpeciesGroupID
+    FROM
+      (
+        ModelType
+      INNER JOIN
+        ModelSet
+      ON
+        ModelType.ID = ModelSet.ModelTypeID
+      )
+    INNER JOIN
+      Analysis
+    ON 
+      ModelSet.ID = Analysis.ModelSetID
+    WHERE
+      ModelType.Description LIKE 'composite index:%'
+  ) AS an 
   ON
-    Scheme.ID = SpeciesGroup.SchemeID
+    sg.SpeciesGroupID = an.SpeciesGroupID
 )
 
 SELECT
-  cteSpeciesGroup.Scheme AS Scheme,
-  cteSpeciesGroup.SpeciesGroup AS SpeciesGroup,
-  ModelType.Description AS ModelType,
-  Analysis.ID AS AnalysisID
-FROM
-  (
-    ModelType
-  INNER JOIN
-    ModelSet
-  ON
-    ModelType.ID = ModelSet.ModelTypeID
-  )
-INNER JOIN
-  (
-    Analysis
-  INNER JOIN
-    cteSpeciesGroup
-  ON
-    Analysis.SpeciesGroupID = cteSpeciesGroup.SpeciesGroupID
-  )
-ON 
-  ModelSet.ID = Analysis.ModelSetID
-WHERE
-  ModelType.Description LIKE 'composite index:%'
+  *
+FROM 
+  cteAnalysis
 "
   index <- sqlQuery(channel = result.channel, query = sql, stringsAsFactors = TRUE)
   if (is.character(index)) {
