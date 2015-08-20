@@ -1,35 +1,4 @@
 sql <- "
-WITH cteParameter
-AS (
-  SELECT
-    P1.ID AS ParameterID,
-    P1.Description AS Period
-  FROM
-    Parameter AS P0
-  INNER JOIN
-    Parameter AS P1
-  ON
-    P0.ID = P1.ParentParameterID
-  WHERE
-    P0.Description = 'Composite index'
-)
-
-SELECT
-  cteParameter.Period,
-  ParameterEstimate.Estimate,
-  ParameterEstimate.LCL,
-  ParameterEstimate.UCL,
-  ParameterEstimate.AnalysisID
-FROM
-  cteParameter
-INNER JOIN
-  ParameterEstimate
-ON
-  cteParameter.ParameterID = ParameterEstimate.ParameterID
-"
-sql <- "
-"
-sql <- "
 WITH cteAnalysis
 AS
 (
@@ -77,15 +46,25 @@ AS
 )
 
 SELECT
-  *
+  cteAnalysis.*,
+  Parameter.Description AS Period,
+  ParameterEstimate.Estimate,
+  ParameterEstimate.LCL,
+  ParameterEstimate.UCL
 FROM 
-  cteAnalysis
+  (
+    cteAnalysis
+  INNER JOIN
+    ParameterEstimate
+  ON
+    cteAnalysis.AnalysisID = ParameterEstimate.AnalysisID
+  )
 INNER JOIN
-  ParameterEstimate
-ON
-  cteAnalysis.AnalysisID = ParameterEstimate.AnalysisID
+  Parameter
+ON 
+  ParameterEstimate.ParameterID = Parameter.ID
 "
-  index <- sqlQuery(channel = result.channel, query = sql, stringsAsFactors = TRUE)
+index <- sqlQuery(channel = result.channel, query = sql, stringsAsFactors = TRUE)
   if (is.character(index)) {
     cat(index)
   } else {
