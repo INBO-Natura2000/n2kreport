@@ -80,6 +80,10 @@ SELECT
   *
 FROM 
   cteAnalysis
+INNER JOIN
+  ParameterEstimate
+ON
+  cteAnalysis.AnalysisID = ParameterEstimate.AnalysisID
 "
   index <- sqlQuery(channel = result.channel, query = sql, stringsAsFactors = TRUE)
   if (is.character(index)) {
