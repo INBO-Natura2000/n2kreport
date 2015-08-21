@@ -9,6 +9,8 @@ Depends:
 Imports:
     dplyr,
     assertthat,
+    ggplot2,
+    scales,
     RODBC
 License: GPL-3
 LazyData: true
