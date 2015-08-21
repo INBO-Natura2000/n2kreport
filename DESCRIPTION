@@ -7,7 +7,6 @@ Description: Presents the results of the analysis of the Natura 2000 monitoring
 Depends:
     R (>= 3.2.0)
 Imports:
-    dplyr,
     assertthat,
     ggplot2,
     scales,
@@ -16,4 +15,5 @@ License: GPL-3
 LazyData: true
 Suggests:
     n2khelper,
+    dplyr,
     testthat
