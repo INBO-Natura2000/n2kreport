@@ -1,12 +1,12 @@
 #' Read the results for the composite indices
-#' @param result.channel An open ODBC connection to the database
+#' @param channel An open ODBC connection to the database
 #' @return a \code{tbl_df} object with the data
 #' @export
 #' @importFrom RODBC sqlQuery
 #' @importFrom dplyr %>% as.tbl
 #' @importFrom assertthat assert_that
-read_composite_index <- function(result.channel){
-  assert_that(inherits(result.channel, "RODBC"))
+read_composite_index <- function(channel){
+  assert_that(inherits(channel, "RODBC"))
   
   sql <- "
 WITH cteParameter
@@ -118,7 +118,7 @@ LEFT JOIN
 cteAnalysis.ID = ParameterEstimate.AnalysisID
   "
   sqlQuery(
-    channel = result.channel, 
+    channel = channel, 
     query = sql, 
     stringsAsFactors = FALSE
   ) %>% as.tbl()

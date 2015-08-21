@@ -4,10 +4,10 @@
 \alias{read_composite_index}
 \title{Read the results for the composite indices}
 \usage{
-read_composite_index(result.channel)
+read_composite_index(channel)
 }
 \arguments{
-\item{result.channel}{An open ODBC connection to the database}
+\item{channel}{An open ODBC connection to the database}
 }
 \value{
 a \code{tbl_df} object with the data
