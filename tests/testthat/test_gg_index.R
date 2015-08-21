@@ -29,3 +29,19 @@ expect_identical(
   length(with.baseline$layers),
   length(no.baseline$layers) + 1L
 )
+
+# tests backtransform
+expect_error(
+  gg_index(index, backtransform = junk),
+  "backtransform is not a flag \\(a length one logical vector\\)"
+)
+expect_error(
+  gg_index(index, backtransform = rep(TRUE, 2)),
+  "backtransform is not a flag \\(a length one logical vector\\)"
+)
+expect_error(
+  gg_index(index, backtransform = NA),
+  "backtransform contains 1 missing values"
+)
+expect_is(gg_index(index, backtransform = TRUE), "ggplot")
+expect_is(gg_index(index, backtransform = FALSE), "ggplot")
