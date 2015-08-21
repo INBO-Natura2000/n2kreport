@@ -8,11 +8,11 @@ describe("read_composite_index()", {
       "channel does not inherit from class RODBC"
     )
   })
-  it("it returns a tbl_df", {
+  it("it returns a data.frame", {
     skip_on_cran()
     expect_is(
       read_composite_index(channel = channel),
-      "tbl_df"
+      "data.frame"
     )
   })
   if (class(channel) == "RODBC") {

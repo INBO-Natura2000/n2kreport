@@ -1,13 +1,13 @@
 context("gg_index")
-requireNamespace("dplyr", quitely = TRUE)
 n <- 10
 junk <- "abc"
 index <- data.frame(
   Period = seq_len(n),
   Estimate = runif(n),
   Error = runif(n)
-) %>%
-  dplyr::mutate_(LCL = ~Estimate - Error, UCL = ~Estimate + Error)
+)
+index$LCL <- index$Estimate - index$Error
+index$UCL <- index$Estimate + index$Error
 
 # works with the defaults
 expect_is(gg_index(index), "ggplot")

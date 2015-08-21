@@ -1,2 +1,2 @@
 lintrs: with_defaults()
-exclude: "[noNA|sqlQuery]\\("
+exclude: "[noNA\\(|sqlQuery\\(|\\$ModelType]"

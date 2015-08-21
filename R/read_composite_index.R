@@ -3,7 +3,6 @@
 #' @return a \code{tbl_df} object with the data
 #' @export
 #' @importFrom RODBC sqlQuery
-#' @importFrom dplyr %>% as.tbl
 #' @importFrom assertthat assert_that
 read_composite_index <- function(channel){
   assert_that(inherits(channel, "RODBC"))
@@ -122,6 +121,6 @@ cteAnalysis.ID = ParameterEstimate.AnalysisID
     channel = channel,
     query = sql,
     stringsAsFactors = FALSE
-  ) %>% as.tbl()
+  )
   # nocov end
 }
