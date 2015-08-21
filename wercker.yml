@@ -1,0 +1,12 @@
+box: rocker/hadleyverse
+build:
+  steps:
+    - script:
+        name: install RODBC
+        code: |
+          apt-get update -y
+          apt-get install -y r-cran-RODBC
+          Rscript -e 'devtools::install_bitbucket("thierry_onkelinx/n2khelper@develop")'
+    - jimhester/r-dependencies
+    - jimhester/r-check
+    - jimhester/r-coverage
