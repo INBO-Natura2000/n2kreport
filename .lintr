@@ -1,0 +1,2 @@
+lintrs: with_defaults()
+exclude: "[noNA|sqlQuery]\\("

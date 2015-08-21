@@ -14,12 +14,12 @@ expect_is(gg_index(index), "ggplot")
 
 # tests the baseline
 expect_error(
-  gg_index(index, baseline = junk), 
+  gg_index(index, baseline = junk),
   "baseline is not a number \\(a length one numeric vector\\)"
 )
 # requires a single baseline
 expect_error(
-  gg_index(index, baseline = 1:2), 
+  gg_index(index, baseline = 1:2),
   "baseline is not a number \\(a length one numeric vector\\)"
 )
 # adds a layer when a baseline is set

@@ -7,7 +7,7 @@
 #' @importFrom assertthat assert_that
 read_composite_index <- function(channel){
   assert_that(inherits(channel, "RODBC"))
-  
+
   # nocov start
   sql <- "
 WITH cteParameter
@@ -36,7 +36,7 @@ AS (
       Parameter.ParentParameterID = cteParameter.ID
 ),
 cteSpeciesGroup
-AS 
+AS
 (
   SELECT
     Scheme.Description AS Scheme,
@@ -75,7 +75,7 @@ AS
     On
       Analysis.StatusID = AnalysisStatus.ID
     )
-  ON 
+  ON
     ModelSet.ID = Analysis.ModelSetID
   WHERE
     ModelType.Description LIKE 'composite index:%'
@@ -105,7 +105,7 @@ SELECT
   ParameterEstimate.Estimate,
   ParameterEstimate.LCL,
   ParameterEstimate.UCL
-FROM 
+FROM
   cteAnalysis
 LEFT JOIN
   (
@@ -115,12 +115,12 @@ LEFT JOIN
   ON
     ParameterEstimate.ParameterID = cteParameter.ID
   )
-  ON 
+  ON
 cteAnalysis.ID = ParameterEstimate.AnalysisID
   "
   sqlQuery(
-    channel = channel, 
-    query = sql, 
+    channel = channel,
+    query = sql,
     stringsAsFactors = FALSE
   ) %>% as.tbl()
   # nocov end
