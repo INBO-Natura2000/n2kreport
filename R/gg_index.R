@@ -9,7 +9,7 @@
 #' @importFrom ggplot2 ggplot aes_string geom_hline geom_errorbar geom_point 
 #'    scale_x_continuous scale_y_continuous
 #' @importFrom scales percent
-gg_index <- function(index, baseline = 1, backtransform = TRUE){
+gg_index <- function(index, baseline, backtransform = TRUE){
   assert_that(is.flag(backtransform))
   assert_that(noNA(backtransform))
   
