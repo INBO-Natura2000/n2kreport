@@ -2,6 +2,8 @@
 
 export(gg_index)
 export(read_composite_index)
+export(refresh_persisent)
+importFrom(DBI,dbWriteTable)
 importFrom(RODBC,sqlQuery)
 importFrom(assertthat,assert_that)
 importFrom(assertthat,is.flag)

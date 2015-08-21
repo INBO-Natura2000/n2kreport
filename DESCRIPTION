@@ -10,6 +10,7 @@ Imports:
     assertthat,
     ggplot2,
     scales,
+    DBI,
     RODBC
 License: GPL-3
 LazyData: true
