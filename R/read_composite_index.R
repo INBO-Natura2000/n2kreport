@@ -4,7 +4,10 @@
 #' @export
 #' @importFrom RODBC sqlQuery
 #' @importFrom dplyr %>% as.tbl
+#' @importFrom assertthat assert_that
 read_composite_index <- function(result.channel){
+  assert_that(inherits(result.channel, "RODBC"))
+  
   sql <- "
 WITH cteParameter
 AS (

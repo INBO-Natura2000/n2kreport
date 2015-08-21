@@ -8,6 +8,7 @@ Depends:
     R (>= 3.2.0)
 Imports:
     dplyr,
+    assertthat,
     RODBC
 License: GPL-3
 LazyData: true

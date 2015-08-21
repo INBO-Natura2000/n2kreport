@@ -2,5 +2,6 @@
 
 export(read_composite_index)
 importFrom(RODBC,sqlQuery)
+importFrom(assertthat,assert_that)
 importFrom(dplyr,"%>%")
 importFrom(dplyr,as.tbl)
