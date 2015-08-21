@@ -24,27 +24,30 @@ AS (
     ON
       Parameter.ParentParameterID = cteParameter.ID
 ),
+cteSpeciesGroup
+AS 
+(
+  SELECT
+    Scheme.Description AS Scheme,
+    SpeciesGroup.Description AS SpeciesGroup,
+    SpeciesGroup.ID AS SpeciesGroupID
+  FROM
+    Scheme
+  INNER JOIN
+    SpeciesGroup
+  ON
+    Scheme.ID = SpeciesGroup.SchemeID
+),
 cteAnalysis
 AS
 (
   SELECT
-    sg.Scheme,
-    sg.SpeciesGroup,
+    Scheme,
+    SpeciesGroup,
     an.ModelType,
     an.AnalysisID
   FROM
-  (
-    SELECT
-      Scheme.Description AS Scheme,
-      SpeciesGroup.Description AS SpeciesGroup,
-      SpeciesGroup.ID AS SpeciesGroupID
-    FROM
-      Scheme
-    INNER JOIN
-      SpeciesGroup
-    ON
-      Scheme.ID = SpeciesGroup.SchemeID
-  ) AS sg
+    cteSpeciesGroup
   INNER JOIN
   (
     SELECT
@@ -67,7 +70,7 @@ AS
       ModelType.Description LIKE 'composite index:%'
   ) AS an 
   ON
-    sg.SpeciesGroupID = an.SpeciesGroupID
+    cteSpeciesGroup.SpeciesGroupID = an.SpeciesGroupID
 )
 
 SELECT
