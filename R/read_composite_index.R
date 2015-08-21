@@ -95,17 +95,17 @@ SELECT
   ParameterEstimate.LCL,
   ParameterEstimate.UCL
 FROM 
+  cteAnalysis
+LEFT JOIN
   (
-    cteAnalysis
+    cteParameter
   INNER JOIN
     ParameterEstimate
   ON
-    cteAnalysis.ID = ParameterEstimate.AnalysisID
+    ParameterEstimate.ParameterID = cteParameter.ID
   )
-INNER JOIN
-  cteParameter
-ON 
-  ParameterEstimate.ParameterID = cteParameter.ID
+  ON 
+cteAnalysis.ID = ParameterEstimate.AnalysisID
 "
 print(system.time(
   index <- sqlQuery(channel = result.channel, query = sql, stringsAsFactors = TRUE)
