@@ -8,6 +8,7 @@
 read_composite_index <- function(channel){
   assert_that(inherits(channel, "RODBC"))
   
+  # nocov start
   sql <- "
 WITH cteParameter
 AS (
@@ -122,4 +123,5 @@ cteAnalysis.ID = ParameterEstimate.AnalysisID
     query = sql, 
     stringsAsFactors = FALSE
   ) %>% as.tbl()
+  # nocov end
 }

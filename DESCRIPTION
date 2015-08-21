@@ -15,4 +15,5 @@ Imports:
 License: GPL-3
 LazyData: true
 Suggests:
+    n2khelper,
     testthat
