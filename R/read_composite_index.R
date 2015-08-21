@@ -1,5 +1,30 @@
 sql <- "
-WITH cteAnalysis
+WITH cteParameter
+AS (
+    SELECT
+      ID,
+      Description AS TopParameter,
+      Description AS BottomParameter,
+      ParentParameterID
+    FROM
+      Parameter
+    WHERE
+      Description = 'Composite index' AND
+      ParentParameterID IS NULL
+  UNION ALL
+    SELECT
+      Parameter.ID,
+      cteParameter.TopParameter AS TopParameter,
+      Parameter.Description AS BottomParameter,
+      Parameter.ParentParameterID
+    FROM
+      Parameter
+    INNER JOIN
+      cteParameter
+    ON
+      Parameter.ParentParameterID = cteParameter.ID
+),
+cteAnalysis
 AS
 (
   SELECT
@@ -47,7 +72,7 @@ AS
 
 SELECT
   cteAnalysis.*,
-  Parameter.Description AS Period,
+  cteParameter.BottomParameter AS Period,
   ParameterEstimate.Estimate,
   ParameterEstimate.LCL,
   ParameterEstimate.UCL
@@ -60,13 +85,29 @@ FROM
     cteAnalysis.AnalysisID = ParameterEstimate.AnalysisID
   )
 INNER JOIN
-  Parameter
+  cteParameter
 ON 
-  ParameterEstimate.ParameterID = Parameter.ID
+  ParameterEstimate.ParameterID = cteParameter.ID
 "
 index <- sqlQuery(channel = result.channel, query = sql, stringsAsFactors = TRUE)
   if (is.character(index)) {
     cat(index)
   } else {
     print(index %>% as.tbl())
+    print(
+      ggplot(
+        index, 
+        aes(
+          x = Period, 
+          y = exp(Estimate), 
+          ymin = exp(LCL), 
+          ymax = exp(UCL)
+        )
+      ) + 
+        geom_hline(yintercept = 1, linetype = 3) +
+        geom_errorbar() + 
+        geom_point() + 
+        facet_grid(SpeciesGroup~ModelType, scales = "free_x") + 
+        scale_y_continuous("Index", labels = percent)
+    )
   }
