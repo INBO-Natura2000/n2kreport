@@ -41,14 +41,15 @@ function(input, output) {
     }
     if (year.cycle == "fYear") {
       index$Period <- as.numeric(index$Period)
-      breaks <- NULL
-      labels <- NULL
-    } else {
-      index$Period <- factor(index$Period)
-      labels <- levels(index$Period)
-      breaks <- seq_along(labels)
-      index$Period <- as.integer(index$Period)
+      return(
+        gg_index(index = index, baseline = 1)
+      )
     }
+
+    index$Period <- factor(index$Period)
+    labels <- levels(index$Period)
+    breaks <- seq_along(labels)
+    index$Period <- as.integer(index$Period)
     gg_index(
       index = index,
       baseline = 1,

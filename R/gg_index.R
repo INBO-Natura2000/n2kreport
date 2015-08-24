@@ -15,8 +15,8 @@ gg_index <- function(
   index,
   baseline,
   backtransform = TRUE,
-  breaks = NULL,
-  labels = NULL
+  breaks,
+  labels
 ){
   assert_that(is.flag(backtransform))
   assert_that(noNA(backtransform))
@@ -36,8 +36,16 @@ gg_index <- function(
   }
   p <- p +
     geom_errorbar() +
-    geom_point() +
-    scale_x_continuous("", breaks = breaks, labels = labels)
+    geom_point()
+  if (missing(breaks)) {
+    p <- p + scale_x_continuous("")
+  } else {
+    if (missing(labels)) {
+      p <- p + scale_x_continuous("", breaks = breaks)
+    } else {
+      p <- p + scale_x_continuous("", breaks = breaks, labels = labels)
+    }
+  }
   if (backtransform) {
     p + scale_y_continuous("Index", label = percent)
   } else {
