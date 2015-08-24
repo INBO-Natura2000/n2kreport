@@ -3,7 +3,7 @@
 #' @param to.plot the dataset to plot
 #' @param base_size The base font size
 #' @importFrom assertthat assert_that is.number has_name
-#' @importFrom ggplot2 theme_gray
+#' @importFrom INBOtheme theme_inbo2015
 plot_index <- function(to.plot, base_size = 12){
   assert_that(inherits(to.plot, "data.frame"))
   assert_that(has_name(to.plot, "SpeciesGroup"))
@@ -18,14 +18,14 @@ plot_index <- function(to.plot, base_size = 12){
   if (nrow(to.plot) == 0 | all(is.na(to.plot$Estimate))) {
     return(
       gg_not_available(title = to.plot$SpeciesGroup[1]) +
-        theme_gray(base_size = base_size)
+        theme_inbo2015(base_size = base_size)
     )
   }
   if (to.plot$ModelType[1] == "fYear") {
     to.plot$Period <- as.numeric(to.plot$Period)
     return(
       gg_index(index = to.plot, baseline = 1, title = to.plot$SpeciesGroup[1]) +
-        theme_gray(base_size = base_size)
+        theme_inbo2015(base_size = base_size)
     )
   }
 
@@ -40,5 +40,5 @@ plot_index <- function(to.plot, base_size = 12){
     labels = labels,
     title = to.plot$SpeciesGroup[1]
   ) +
-    theme_gray(base_size = base_size)
+    theme_inbo2015(base_size = base_size)
 }
