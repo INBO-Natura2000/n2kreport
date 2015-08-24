@@ -6,7 +6,8 @@ fluidPage(
       uiOutput("ui"),
       wellPanel(
         p(strong("Download data")),
-        downloadButton("downloadData", "This index")
+        downloadButton("downloadData", "This index"),
+        downloadButton("downloadDataAll", "All indices")
       )
     ),
     column(

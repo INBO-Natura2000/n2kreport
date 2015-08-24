@@ -68,10 +68,18 @@ shinyServer(function(input, output) {
 
   output$downloadData <- downloadHandler(
     filename = function() {
-      paste0(input$SpeciesGroup, "_", input$YearCycle, ".txt")
+      paste0("index_", input$SpeciesGroup, "_", input$YearCycle, ".txt")
     },
     content = function(file) {
       write.table(index(), file, sep = "\t", row.names = FALSE)
+    }
+  )
+  output$downloadDataAll <- downloadHandler(
+    filename = function() {
+      "index_all.txt"
+    },
+    content = function(file) {
+      write.table(export_index(local.db), file, sep = "\t", row.names = FALSE)
     }
   )
 }
