@@ -3,6 +3,7 @@
 export(connect_local)
 export(gg_index)
 export(import_composite_index)
+export(read_index)
 export(read_species)
 export(refresh_persisent)
 export(start_n2k_index)

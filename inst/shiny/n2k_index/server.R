@@ -18,19 +18,9 @@ function(input, output) {
       species$Species[1],
       input$SpeciesGroup
     )
-    sql <- paste0(
-"
-SELECT
-  *
-FROM
-  CompositeIndex
-WHERE
-  ModelType = 'fYear' AND
-  SpeciesGroup = '", species.group, "'
-"
+    gg_index(
+      index = read_index(connection = local.db, species = species.group),
+      baseline = 1
     )
-    index <- dbGetQuery(conn = local.db, statement = sql)
-    index$Period <- as.numeric(index$Period)
-    gg_index(index = index, baseline = 1)
   })
 }
