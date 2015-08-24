@@ -8,7 +8,7 @@ expect_error(
   "path is not a string \\(a length one character vector\\)"
 )
 expect_is(
-  tmp.connection <- connect_local(":memory:"),
+  tmp.connection <- connect_local(dummy.path),
   "SQLiteConnection"
 )
 DBI::dbDisconnect(tmp.connection)

@@ -8,6 +8,7 @@ Depends:
     R (>= 3.2.0)
 Imports:
     assertthat,
+    dplyr,
     ggplot2,
     scales,
     DBI,
@@ -18,5 +19,4 @@ License: GPL-3
 LazyData: true
 Suggests:
     n2khelper,
-    dplyr,
     testthat
