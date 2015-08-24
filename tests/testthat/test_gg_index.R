@@ -45,3 +45,12 @@ expect_error(
 )
 expect_is(gg_index(index, backtransform = TRUE), "ggplot")
 expect_is(gg_index(index, backtransform = FALSE), "ggplot")
+expect_is(gg_index(index, title = "my title"), "ggplot")
+expect_error(
+  gg_index(index, title = NA),
+  "title is not a string \\(a length one character vector\\)"
+)
+expect_error(
+  gg_index(index, title = c("a", "b")),
+  "title is not a string \\(a length one character vector\\)"
+)

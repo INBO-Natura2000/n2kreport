@@ -6,20 +6,25 @@
 #'    (\code{FALSE})
 #' @param breaks an optional vector of breaks on the x axis
 #' @param labels an optional vector of labels on the x axis
+#' @param title an optional title
 #' @export
-#' @importFrom assertthat assert_that is.flag noNA is.number
+#' @importFrom assertthat assert_that is.flag noNA is.number is.string
 #' @importFrom ggplot2 ggplot aes_string geom_hline geom_errorbar geom_point
-#'    scale_x_continuous scale_y_continuous
+#'    scale_x_continuous scale_y_continuous ggtitle
 #' @importFrom scales percent
 gg_index <- function(
   index,
   baseline,
   backtransform = TRUE,
   breaks,
-  labels
+  labels,
+  title
 ){
   assert_that(is.flag(backtransform))
   assert_that(noNA(backtransform))
+  if (!missing(title)) {
+    assert_that(is.string(title))
+  }
 
   if (backtransform) {
     index$Estimate <- exp(index$Estimate)
@@ -47,8 +52,12 @@ gg_index <- function(
     }
   }
   if (backtransform) {
-    p + scale_y_continuous("Index", label = percent)
+    p <- p + scale_y_continuous("Index", label = percent)
   } else {
-    p + scale_y_continuous("Index")
+    p <- p + scale_y_continuous("Index")
   }
+  if (!missing(title)) {
+    p <- p + ggtitle(title)
+  }
+  return(p)
 }

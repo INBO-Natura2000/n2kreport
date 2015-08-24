@@ -4,7 +4,7 @@
 \alias{gg_index}
 \title{Create a ggplot2 object on an index}
 \usage{
-gg_index(index, baseline, backtransform = TRUE, breaks, labels)
+gg_index(index, baseline, backtransform = TRUE, breaks, labels, title)
 }
 \arguments{
 \item{index}{A \code{data.frame} with the indices}
@@ -18,6 +18,8 @@ displayed in the original scale (\code{TRUE}) or in the log-scale
 \item{breaks}{an optional vector of breaks on the x axis}
 
 \item{labels}{an optional vector of labels on the x axis}
+
+\item{title}{an optional title}
 }
 \description{
 Create a ggplot2 object on an index

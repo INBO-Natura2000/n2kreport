@@ -42,7 +42,7 @@ function(input, output) {
     if (year.cycle == "fYear") {
       index$Period <- as.numeric(index$Period)
       return(
-        gg_index(index = index, baseline = 1)
+        gg_index(index = index, baseline = 1, title = species.group)
       )
     }
 
@@ -54,7 +54,8 @@ function(input, output) {
       index = index,
       baseline = 1,
       breaks = breaks,
-      labels = labels
+      labels = labels,
+      title = species.group
     )
   })
 }
