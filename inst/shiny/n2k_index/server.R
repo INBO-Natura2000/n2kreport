@@ -68,7 +68,14 @@ shinyServer(function(input, output) {
   output$plotIndex <- renderUI({
     plotOutput(
       "composite",
-      width = sprintf("%.fpx", input$plotWidth * 400 / input$plotHeight)
+      width = sprintf(
+        "%.fpx",
+        input$imageSize * pmin(input$plotWidth / input$plotHeight)
+      ),
+      height = sprintf(
+        "%.fpx",
+        input$imageSize * pmin(input$plotHeight / input$plotWidth)
+      )
     )
   })
 

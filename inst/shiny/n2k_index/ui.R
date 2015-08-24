@@ -4,6 +4,13 @@ fluidPage(
     column(
       2,
       uiOutput("ui"),
+      sliderInput(
+        "imageSize",
+        "plot size",
+        min = 100,
+        max = 1000,
+        value = 600
+      ),
       wellPanel(
         p(strong("Download data")),
         downloadButton("downloadData", "This index"),
@@ -24,7 +31,7 @@ fluidPage(
           "image height (cm)",
           min = 1,
           max = 50,
-          value = 5
+          value = 10
         )
       )
     ),
