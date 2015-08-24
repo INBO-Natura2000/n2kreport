@@ -114,6 +114,7 @@ shinyServer(function(input, output) {
         filename = file,
         plot = plot_index(index()),
         units = "cm",
+        scale = 2,
         width = input$plotWidth,
         height = input$plotHeight
       )
