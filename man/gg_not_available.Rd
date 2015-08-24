@@ -4,7 +4,10 @@
 \alias{gg_not_available}
 \title{ggplot object with text "No results available"}
 \usage{
-gg_not_available()
+gg_not_available(title)
+}
+\arguments{
+\item{title}{an optional title}
 }
 \description{
 ggplot object with text "No results available"

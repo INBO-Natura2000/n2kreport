@@ -37,7 +37,7 @@ function(input, output) {
       frequency = year.cycle
     )
     if (nrow(index) == 0 | all(is.na(index$Estimate))) {
-      return(gg_not_available())
+      return(gg_not_available(title = species.group))
     }
     if (year.cycle == "fYear") {
       index$Period <- as.numeric(index$Period)
