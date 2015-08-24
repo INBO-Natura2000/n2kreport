@@ -11,7 +11,7 @@ refresh_persisent <- function(remote.db, local.db){
   assert_that(inherits(remote.db, "RODBC"))
 
   # nocov start
-  composite.index <- read_composite_index(channel = remote.db)
+  composite.index <- import_composite_index(channel = remote.db)
   composite.index$ModelType <- gsub(
     "composite index: ",
     "",

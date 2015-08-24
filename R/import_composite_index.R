@@ -4,7 +4,7 @@
 #' @export
 #' @importFrom RODBC sqlQuery
 #' @importFrom assertthat assert_that
-read_composite_index <- function(channel){
+import_composite_index <- function(channel){
   assert_that(inherits(channel, "RODBC"))
 
   # nocov start
