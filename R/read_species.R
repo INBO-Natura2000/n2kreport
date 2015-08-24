@@ -4,7 +4,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom DBI dbGetQuery
 read_species <- function(connection){
-  assert_that(inherits(connection, "SQLiteConnection"))
+  assert_that(inherits(connection, "DBIConnection"))
 
   sql <- paste0("
 SELECT DISTINCT
