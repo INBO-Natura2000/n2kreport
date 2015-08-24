@@ -11,7 +11,21 @@ fluidPage(
       ),
       wellPanel(
         p(strong("Download image")),
-        downloadButton("downloadImage", "This index")
+        downloadButton("downloadImage", "This index"),
+        sliderInput(
+          "plotWidth",
+          "image width (cm)",
+          min = 1,
+          max = 50,
+          value = 10
+        ),
+        sliderInput(
+          "plotHeight",
+          "image height (cm)",
+          min = 1,
+          max = 50,
+          value = 5
+        )
       )
     ),
     column(

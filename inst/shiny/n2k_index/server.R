@@ -95,7 +95,13 @@ shinyServer(function(input, output) {
       paste0("index_", input$SpeciesGroup, "_", input$YearCycle, ".png")
     },
     content = function(file) {
-      ggsave(filename = file, plot = plot_index(index()))
+      ggsave(
+        filename = file,
+        plot = plot_index(index()),
+        units = "cm",
+        width = input$plotWidth,
+        height = input$plotHeight
+      )
     }
   )
 }
