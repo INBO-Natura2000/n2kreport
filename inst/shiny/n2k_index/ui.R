@@ -30,7 +30,7 @@ fluidPage(
     ),
     column(
       10,
-      plotOutput("composite")
+      uiOutput("plotIndex")
     )
   )
 )

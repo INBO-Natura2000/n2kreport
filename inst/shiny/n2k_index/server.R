@@ -64,6 +64,14 @@ shinyServer(function(input, output) {
     )
   })
 
+
+  output$plotIndex <- renderUI({
+    plotOutput(
+      "composite",
+      width = sprintf("%.fpx", input$plotWidth * 400 / input$plotHeight)
+    )
+  })
+
   output$composite <- renderPlot({
     plot_index(to.plot = index())
   })
