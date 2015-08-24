@@ -54,3 +54,12 @@ expect_error(
   gg_index(index, title = c("a", "b")),
   "title is not a string \\(a length one character vector\\)"
 )
+expect_is(gg_index(index, breaks = unique(index$Period)), "ggplot")
+expect_is(
+  gg_index(
+    index,
+    breaks = unique(index$Period),
+    labels = unique(index$Period)
+  ),
+  "ggplot"
+)
