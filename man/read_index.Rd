@@ -4,7 +4,7 @@
 \alias{read_index}
 \title{read the required indices}
 \usage{
-read_index(connection, species)
+read_index(connection, species, frequency)
 }
 \arguments{
 \item{connection}{An open connection to the SQLite database}

@@ -4,9 +4,10 @@
 #' @param species the ID of the relevant species
 #' @importFrom assertthat assert_that is.string
 #' @importFrom DBI dbGetQuery
-read_index <- function(connection, species){
+read_index <- function(connection, species, frequency){
   assert_that(inherits(connection, "DBIConnection"))
   assert_that(is.string(species))
+  assert_that(is.string(frequency))
 
   sql <- paste0(
     "
@@ -15,11 +16,9 @@ SELECT
 FROM
   CompositeIndex
 WHERE
-  ModelType = 'fYear' AND
+  ModelType = '", frequency, "' AND
   SpeciesGroup = '", species, "'
     "
   )
-  index <- dbGetQuery(conn = connection, statement = sql)
-  index$Period <- as.numeric(index$Period)
-  return(index)
+  dbGetQuery(conn = connection, statement = sql)
 }

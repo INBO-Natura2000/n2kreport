@@ -4,7 +4,8 @@
 \alias{gg_index}
 \title{Create a ggplot2 object on an index}
 \usage{
-gg_index(index, baseline, backtransform = TRUE)
+gg_index(index, baseline, backtransform = TRUE, breaks = NULL,
+  labels = NULL)
 }
 \arguments{
 \item{index}{A \code{data.frame} with the indices}

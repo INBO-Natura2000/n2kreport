@@ -4,11 +4,19 @@ function(input, output) {
 
   species <- read_species(connection = local.db)
   output$ui <- renderUI({
-    selectInput(
-      "SpeciesGroup",
-      "Species group",
-      choices = species$SpeciesGroup,
-      selected = species$Species[1]
+    list(
+        selectInput(
+        "SpeciesGroup",
+        "Species group",
+        choices = species$SpeciesGroup,
+        selected = species$Species[1]
+      ),
+      radioButtons(
+        "YearCycle",
+        "Frequency",
+        choices = c(Year = "fYear", Cycle = "fCycle"),
+        selected = "fYear"
+      )
     )
   })
 
@@ -18,9 +26,34 @@ function(input, output) {
       species$Species[1],
       input$SpeciesGroup
     )
+    year.cycle <- ifelse(
+      is.null(input$YearCycle),
+      "fYear",
+      input$YearCycle
+    )
+    index <- read_index(
+      connection = local.db,
+      species = species.group,
+      frequency = year.cycle
+    )
+    if (nrow(index) == 0 | all(is.na(index$Estimate))) {
+      return(gg_not_available())
+    }
+    if (year.cycle == "fYear") {
+      index$Period <- as.numeric(index$Period)
+      breaks <- NULL
+      labels <- NULL
+    } else {
+      index$Period <- factor(index$Period)
+      labels <- levels(index$Period)
+      breaks <- seq_along(labels)
+      index$Period <- as.integer(index$Period)
+    }
     gg_index(
-      index = read_index(connection = local.db, species = species.group),
-      baseline = 1
+      index = index,
+      baseline = 1,
+      breaks = breaks,
+      labels = labels
     )
   })
 }
