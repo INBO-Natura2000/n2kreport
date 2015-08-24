@@ -8,6 +8,10 @@ fluidPage(
         p(strong("Download data")),
         downloadButton("downloadData", "This index"),
         downloadButton("downloadDataAll", "All indices")
+      ),
+      wellPanel(
+        p(strong("Download image")),
+        downloadButton("downloadImage", "This index")
       )
     ),
     column(

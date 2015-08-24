@@ -1,4 +1,30 @@
 require(n2kreport)
+require(ggplot2)
+
+plot_index <- function(to.plot){
+  if (nrow(to.plot) == 0 | all(is.na(to.plot$Estimate))) {
+    return(gg_not_available(title = to.plot$SpeciesGroup[1]))
+  }
+  if (to.plot$ModelType[1] == "fYear") {
+    to.plot$Period <- as.numeric(to.plot$Period)
+    return(
+      gg_index(index = to.plot, baseline = 1, title = to.plot$SpeciesGroup[1])
+    )
+  }
+
+  to.plot$Period <- factor(to.plot$Period)
+  labels <- levels(to.plot$Period)
+  breaks <- seq_along(labels)
+  to.plot$Period <- as.integer(to.plot$Period)
+  gg_index(
+    index = to.plot,
+    baseline = 1,
+    breaks = breaks,
+    labels = labels,
+    title = to.plot$SpeciesGroup[1]
+  )
+}
+
 shinyServer(function(input, output) {
   local.db <- connect_local()
 
@@ -39,29 +65,9 @@ shinyServer(function(input, output) {
   })
 
   output$composite <- renderPlot({
-    to.plot <- index()
-    if (nrow(to.plot) == 0 | all(is.na(to.plot$Estimate))) {
-      return(gg_not_available(title = to.plot$SpeciesGroup[1]))
-    }
-    if (to.plot$ModelType[1] == "fYear") {
-      to.plot$Period <- as.numeric(to.plot$Period)
-      return(
-        gg_index(index = to.plot, baseline = 1, title = to.plot$SpeciesGroup[1])
-      )
-    }
-
-    to.plot$Period <- factor(to.plot$Period)
-    labels <- levels(to.plot$Period)
-    breaks <- seq_along(labels)
-    to.plot$Period <- as.integer(to.plot$Period)
-    gg_index(
-      index = to.plot,
-      baseline = 1,
-      breaks = breaks,
-      labels = labels,
-      title = to.plot$SpeciesGroup[1]
-    )
+    plot_index(to.plot = index())
   })
+
   output$table <- renderDataTable({
     index()
   })
@@ -74,12 +80,22 @@ shinyServer(function(input, output) {
       write.table(index(), file, sep = "\t", row.names = FALSE)
     }
   )
+
   output$downloadDataAll <- downloadHandler(
     filename = function() {
       "index_all.txt"
     },
     content = function(file) {
       write.table(export_index(local.db), file, sep = "\t", row.names = FALSE)
+    }
+  )
+
+  output$downloadImage <- downloadHandler(
+    filename = function() {
+      paste0("index_", input$SpeciesGroup, "_", input$YearCycle, ".png")
+    },
+    content = function(file) {
+      ggsave(filename = file, plot = plot_index(index()))
     }
   )
 }
