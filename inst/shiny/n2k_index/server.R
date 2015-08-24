@@ -2,29 +2,20 @@ require(n2kreport)
 function(input, output) {
   local.db <- connect_local()
 
-  sql <- paste0("
-SELECT DISTINCT
-  SpeciesGroup
-FROM
-  CompositeIndex
-ORDER BY
-  SpeciesGroup
-  ")
-  species.groups <- dbGetQuery(conn = local.db, statement = sql)
-
+  species <- read_species(connection = local.db)
   output$ui <- renderUI({
     selectInput(
       "SpeciesGroup",
       "Species group",
-      choices = species.groups$SpeciesGroup,
-      selected = species.groups$SpeciesGroup[1]
+      choices = species$SpeciesGroup,
+      selected = species$Species[1]
     )
   })
 
   output$composite <- renderPlot({
     species.group <- ifelse(
       is.null(input$SpeciesGroup),
-      species.groups$SpeciesGroup[1],
+      species$Species[1],
       input$SpeciesGroup
     )
     sql <- paste0(
