@@ -1,5 +1,5 @@
 require(n2kreport)
-function(input, output) {
+shinyServer(function(input, output) {
   local.db <- connect_local()
 
   species <- read_species(connection = local.db)
@@ -20,7 +20,7 @@ function(input, output) {
     )
   })
 
-  output$composite <- renderPlot({
+  index <- reactive({
     species.group <- ifelse(
       is.null(input$SpeciesGroup),
       species$Species[1],
@@ -31,31 +31,48 @@ function(input, output) {
       "fYear",
       input$YearCycle
     )
-    index <- read_index(
+    read_index(
       connection = local.db,
       species = species.group,
       frequency = year.cycle
     )
-    if (nrow(index) == 0 | all(is.na(index$Estimate))) {
-      return(gg_not_available(title = species.group))
+  })
+
+  output$composite <- renderPlot({
+    to.plot <- index()
+    if (nrow(to.plot) == 0 | all(is.na(to.plot$Estimate))) {
+      return(gg_not_available(title = to.plot$SpeciesGroup[1]))
     }
-    if (year.cycle == "fYear") {
-      index$Period <- as.numeric(index$Period)
+    if (to.plot$ModelType[1] == "fYear") {
+      to.plot$Period <- as.numeric(to.plot$Period)
       return(
-        gg_index(index = index, baseline = 1, title = species.group)
+        gg_index(index = to.plot, baseline = 1, title = to.plot$SpeciesGroup[1])
       )
     }
 
-    index$Period <- factor(index$Period)
-    labels <- levels(index$Period)
+    to.plot$Period <- factor(to.plot$Period)
+    labels <- levels(to.plot$Period)
     breaks <- seq_along(labels)
-    index$Period <- as.integer(index$Period)
+    to.plot$Period <- as.integer(to.plot$Period)
     gg_index(
-      index = index,
+      index = to.plot,
       baseline = 1,
       breaks = breaks,
       labels = labels,
-      title = species.group
+      title = to.plot$SpeciesGroup[1]
     )
   })
+  output$table <- renderDataTable({
+    index()
+  })
+
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste0(input$SpeciesGroup, "_", input$YearCycle, ".txt")
+    },
+    content = function(file) {
+      write.table(index(), file, sep = "\t", row.names = FALSE)
+    }
+  )
 }
+)
