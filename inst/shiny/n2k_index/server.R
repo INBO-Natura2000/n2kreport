@@ -1,35 +1,6 @@
 require(n2kreport)
 require(ggplot2)
 
-plot_index <- function(to.plot, base_size = 12){
-  if (nrow(to.plot) == 0 | all(is.na(to.plot$Estimate))) {
-    return(
-      gg_not_available(title = to.plot$SpeciesGroup[1]) +
-        theme_gray(base_size = base_size)
-    )
-  }
-  if (to.plot$ModelType[1] == "fYear") {
-    to.plot$Period <- as.numeric(to.plot$Period)
-    return(
-      gg_index(index = to.plot, baseline = 1, title = to.plot$SpeciesGroup[1]) +
-        theme_gray(base_size = base_size)
-    )
-  }
-
-  to.plot$Period <- factor(to.plot$Period)
-  labels <- levels(to.plot$Period)
-  breaks <- seq_along(labels)
-  to.plot$Period <- as.integer(to.plot$Period)
-  gg_index(
-    index = to.plot,
-    baseline = 1,
-    breaks = breaks,
-    labels = labels,
-    title = to.plot$SpeciesGroup[1]
-  ) +
-    theme_gray(base_size = base_size)
-}
-
 shinyServer(function(input, output) {
   local.db <- connect_local()
 
@@ -89,10 +60,6 @@ shinyServer(function(input, output) {
       to.plot = index(),
       base_size = input$baseSize
     )
-  })
-
-  output$table <- renderDataTable({
-    index()
   })
 
   output$downloadData <- downloadHandler(
