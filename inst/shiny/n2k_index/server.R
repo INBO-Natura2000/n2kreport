@@ -1,14 +1,18 @@
 require(n2kreport)
 require(ggplot2)
 
-plot_index <- function(to.plot){
+plot_index <- function(to.plot, base_size = 12){
   if (nrow(to.plot) == 0 | all(is.na(to.plot$Estimate))) {
-    return(gg_not_available(title = to.plot$SpeciesGroup[1]))
+    return(
+      gg_not_available(title = to.plot$SpeciesGroup[1]) +
+        theme_gray(base_size = base_size)
+    )
   }
   if (to.plot$ModelType[1] == "fYear") {
     to.plot$Period <- as.numeric(to.plot$Period)
     return(
-      gg_index(index = to.plot, baseline = 1, title = to.plot$SpeciesGroup[1])
+      gg_index(index = to.plot, baseline = 1, title = to.plot$SpeciesGroup[1]) +
+        theme_gray(base_size = base_size)
     )
   }
 
@@ -22,7 +26,8 @@ plot_index <- function(to.plot){
     breaks = breaks,
     labels = labels,
     title = to.plot$SpeciesGroup[1]
-  )
+  ) +
+    theme_gray(base_size = base_size)
 }
 
 shinyServer(function(input, output) {
@@ -80,7 +85,10 @@ shinyServer(function(input, output) {
   })
 
   output$composite <- renderPlot({
-    plot_index(to.plot = index())
+    plot_index(
+      to.plot = index(),
+      base_size = input$baseSize
+    )
   })
 
   output$table <- renderDataTable({
@@ -112,7 +120,7 @@ shinyServer(function(input, output) {
     content = function(file) {
       ggsave(
         filename = file,
-        plot = plot_index(index()),
+        plot = plot_index(index(), base_size = input$baseSize),
         units = "cm",
         scale = 2,
         width = input$plotWidth,

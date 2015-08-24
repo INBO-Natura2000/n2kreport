@@ -11,6 +11,13 @@ fluidPage(
         max = 1000,
         value = 600
       ),
+      sliderInput(
+        "baseSize",
+        "font size",
+        min = 1,
+        max = 30,
+        value = 16
+      ),
       wellPanel(
         p(strong("Download data")),
         downloadButton("downloadData", "This index"),
