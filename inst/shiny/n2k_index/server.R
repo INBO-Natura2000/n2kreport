@@ -1,5 +1,6 @@
+require(n2kreport)
 function(input, output) {
-  local.db <- dbConnect(RSQLite::SQLite(), "~/analysis/n2kreport.sqlite")
+  local.db <- connect_local()
 
   sql <- paste0("
 SELECT DISTINCT

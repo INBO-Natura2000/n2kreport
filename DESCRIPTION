@@ -12,11 +12,11 @@ Imports:
     scales,
     DBI,
     shiny,
+    RSQLite,
     RODBC
 License: GPL-3
 LazyData: true
 Suggests:
     n2khelper,
     dplyr,
-    RSQLite,
     testthat
