@@ -4,6 +4,8 @@
 #' @param backtransform A logical value indicating is the results should be
 #'    displayed in the original scale (\code{TRUE}) or in the log-scale
 #'    (\code{FALSE})
+#' @param breaks an optional vector of breaks on the x axis
+#' @param labels an optional vector of labels on the x axis
 #' @export
 #' @importFrom assertthat assert_that is.flag noNA is.number
 #' @importFrom ggplot2 ggplot aes_string geom_hline geom_errorbar geom_point

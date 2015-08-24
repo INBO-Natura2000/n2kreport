@@ -10,6 +10,8 @@ read_index(connection, species, frequency)
 \item{connection}{An open connection to the SQLite database}
 
 \item{species}{the ID of the relevant species}
+
+\item{frequency}{Return the yearly indices or per cycle}
 }
 \description{
 read the required indices

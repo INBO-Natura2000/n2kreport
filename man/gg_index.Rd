@@ -15,6 +15,10 @@ gg_index(index, baseline, backtransform = TRUE, breaks = NULL,
 \item{backtransform}{A logical value indicating is the results should be
 displayed in the original scale (\code{TRUE}) or in the log-scale
 (\code{FALSE})}
+
+\item{breaks}{an optional vector of breaks on the x axis}
+
+\item{labels}{an optional vector of labels on the x axis}
 }
 \description{
 Create a ggplot2 object on an index

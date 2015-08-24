@@ -2,6 +2,7 @@
 #' @export
 #' @inheritParams read_species
 #' @param species the ID of the relevant species
+#' @param frequency Return the yearly indices or per cycle
 #' @importFrom assertthat assert_that is.string
 #' @importFrom DBI dbGetQuery
 read_index <- function(connection, species, frequency){
