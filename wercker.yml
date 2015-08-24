@@ -7,6 +7,8 @@ build:
           apt-get update -y
           apt-get install -y r-cran-RODBC
           Rscript -e 'devtools::install_bitbucket("thierry_onkelinx/n2khelper@develop")'
+          git clone --branch master --single-branch --depth 1 git@bitbucket.org:thierry_onkelinx/inbotheme.git
+          Rscript -e 'devtools::install("inbotheme")'
     - jimhester/r-dependencies
     - jimhester/r-check
     - jimhester/r-coverage
