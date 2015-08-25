@@ -8,6 +8,11 @@ export_plot_zip(zipfile, connection, base_size = 12, width = 10,
   height = 10)
 }
 \arguments{
+\item{zipfile}{The pathname of the zip file: tilde expansion (see
+    \code{\link{path.expand}}) will be performed.}
+
+\item{connection}{An open connection to the SQLite database}
+
 \item{base_size}{The base font size}
 
 \item{width}{the width in cm}

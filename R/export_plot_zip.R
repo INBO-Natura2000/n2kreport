@@ -1,6 +1,7 @@
 #' Export all indices as plots
 #' @export
-#' @inheritParams utils::zipfile
+#' @inheritParams utils::zip
+#' @inheritParams read_species
 #' @inheritParams plot_index
 #' @inheritParams export_plot
 #' @importFrom dplyr %>% group_by_ do mutate_
@@ -12,6 +13,11 @@ export_plot_zip <- function(
   width = 10,
   height = 10
 ){
+  ### Fooling R CMD Check ###
+  . <- NULL
+  rm(.)
+  ### Fooling R CMD Check ###
+
   current.wd <- getwd()
   setwd(tempdir())
   to.do <- export_index(connection) %>%
