@@ -1,5 +1,4 @@
 require(n2kreport)
-require(ggplot2)
 
 shinyServer(function(input, output) {
   local.db <- connect_local()
@@ -85,11 +84,9 @@ shinyServer(function(input, output) {
       paste0("index_", input$SpeciesGroup, "_", input$YearCycle, ".png")
     },
     content = function(file) {
-      ggsave(
-        filename = file,
+      export_plot(
+        file = file,
         plot = plot_index(index(), base_size = input$baseSize),
-        units = "cm",
-        scale = 2,
         width = input$plotWidth,
         height = input$plotHeight
       )
