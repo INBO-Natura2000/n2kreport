@@ -4,6 +4,8 @@ Version: 0.0
 Authors@R: c(person("Thierry", "Onkelinx", email = "thierry.onkelinx@inbo.be", role = c("aut", "cre")))
 Description: Presents the results of the analysis of the Natura 2000 monitoring
     in a readable format.
+License: GPL-3
+LazyData: true
 Depends:
     R (>= 3.2.0)
 Imports:
@@ -15,8 +17,6 @@ Imports:
     shiny,
     RSQLite,
     RODBC
-License: GPL-3
-LazyData: true
 Suggests:
     n2khelper,
     testthat
