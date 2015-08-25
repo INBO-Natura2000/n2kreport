@@ -44,6 +44,7 @@ fluidPage(
     ),
     column(
       10,
+      htmlOutput("analysisID"),
       uiOutput("plotIndex")
     )
   )

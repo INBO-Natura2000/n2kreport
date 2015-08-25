@@ -39,6 +39,16 @@ shinyServer(function(input, output) {
     )
   })
 
+  output$analysisID <- renderText({
+    paste(
+      "<b>Analysis ID:</b>",
+      paste(
+        substring(unique(index()$Fingerprint), 1, 10),
+        collapse = ", "
+      )
+    )
+  })
+
 
   output$plotIndex <- renderUI({
     plotOutput(
