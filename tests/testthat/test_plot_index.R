@@ -5,7 +5,6 @@ index <- read_index(
   species = "A",
   frequency = "fYear"
 )
-index$Period <- as.numeric(index$Period)
 expect_is(plot_index(index), "ggplot")
 expect_is(plot_index(index[integer(0), ]), "ggplot")
 expect_is(plot_index(index, base_size = 20), "ggplot")
@@ -51,5 +50,12 @@ expect_error(
   plot_index(index, base_size = -20),
   "base_size not greater than 0"
 )
+
+index <- read_index(
+  connection = connection,
+  species = "A",
+  frequency = "fCycle"
+)
+expect_is(plot_index(index), "ggplot")
 
 DBI::dbDisconnect(connection)
