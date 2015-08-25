@@ -1,6 +1,6 @@
 context("import_composite_index")
 describe("import_composite_index()", {
-  channel <- n2khelper::connect_result()
+  channel <- connect_remote()
   junk <- "junk"
   it("tests if the channel in an ODBC connection", {
     expect_error(

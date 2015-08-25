@@ -55,6 +55,7 @@ AS
     ModelType.Description AS ModelType,
     Analysis.ID,
     Analysis.Fingerprint,
+    Analysis.StatusFingerprint,
     Analysis.AnalysisDate,
     AnalysisStatus.Description AS Status,
     Analysis.SpeciesGroupID
@@ -99,7 +100,13 @@ AS
 )
 
 SELECT
-  cteAnalysis.*,
+  cteAnalysis.Fingerprint,
+  cteAnalysis.StatusFingerprint,
+  cteAnalysis.AnalysisDate,
+  cteAnalysis.Status,
+  cteAnalysis.Scheme,
+  cteAnalysis.SpeciesGroup,
+  cteAnalysis.ModelType,
   cteParameter.BottomParameter AS Period,
   ParameterEstimate.Estimate,
   ParameterEstimate.LCL,
