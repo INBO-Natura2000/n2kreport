@@ -14,7 +14,7 @@ plot_index <- function(to.plot, base_size = 12){
   assert_that(is.number(base_size))
   assert_that(base_size > 0)
 
-  if ("INBOtheme" %in% installed.packages()[, "Package"]) {
+  if (requireNamespace("INBOtheme", quietly = TRUE)) {
     theme_index <- INBOtheme::theme_inbo2015 # nocov
   } else {
     theme_index <- ggplot2::theme_gray
