@@ -14,10 +14,10 @@ Imports:
     DBI,
     shiny,
     RSQLite,
-    INBOtheme,
     RODBC
 License: GPL-3
 LazyData: true
 Suggests:
     n2khelper,
+    INBOtheme,
     testthat
