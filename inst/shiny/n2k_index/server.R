@@ -118,5 +118,21 @@ shinyServer(function(input, output) {
       )
     }
   )
+
+  output$downloadImageAll <- downloadHandler(
+    filename = function() {
+      sha1 <- get_sha1(export_index(local.db))
+      paste0("index_",  sha1, ".zip")
+    },
+    content = function(file) {
+      export_plot_zip(
+        zipfile = file,
+        connection = local.db,
+        base_size = input$baseSize,
+        width = input$plotWidth,
+        height = input$plotHeight
+      )
+    }
+  )
 }
 )
