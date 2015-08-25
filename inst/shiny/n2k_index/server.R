@@ -39,13 +39,17 @@ shinyServer(function(input, output) {
     )
   })
 
+  analysis <- reactive({
+    paste(
+      substring(unique(index()$Fingerprint), 1, 10),
+      collapse = "-"
+    )
+  })
+
   output$analysisID <- renderText({
     paste(
       "<b>Analysis ID:</b>",
-      paste(
-        substring(unique(index()$Fingerprint), 1, 10),
-        collapse = ", "
-      )
+      analysis()
     )
   })
 
@@ -73,7 +77,13 @@ shinyServer(function(input, output) {
 
   output$downloadData <- downloadHandler(
     filename = function() {
-      paste0("index_", input$SpeciesGroup, "_", input$YearCycle, ".txt")
+      paste0(
+        "index_",
+        input$SpeciesGroup, "_",
+        input$YearCycle, "_",
+        analysis(),
+        ".txt"
+      )
     },
     content = function(file) {
       write.table(index(), file, sep = "\t", row.names = FALSE)
@@ -91,7 +101,13 @@ shinyServer(function(input, output) {
 
   output$downloadImage <- downloadHandler(
     filename = function() {
-      paste0("index_", input$SpeciesGroup, "_", input$YearCycle, ".png")
+      paste0(
+        "index_",
+        input$SpeciesGroup, "_",
+        input$YearCycle, "_",
+        analysis(),
+        ".png"
+      )
     },
     content = function(file) {
       export_plot(
