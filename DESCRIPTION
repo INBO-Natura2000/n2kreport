@@ -16,9 +16,9 @@ Imports:
     DBI,
     shiny,
     RSQLite,
+    n2khelper,
     RODBC
 Suggests:
-    n2khelper,
     testthat
 Enhances:
     INBOtheme
