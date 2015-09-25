@@ -14,6 +14,5 @@ start_n2k_index <- function() {
     )
   }
   # nocov end
-  assert_that(interactive())
   runApp(app.dir, display.mode = "normal", launch.browser = TRUE) #nocov
 }
