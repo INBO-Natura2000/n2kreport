@@ -4,7 +4,8 @@
 #' @export
 #' @importFrom assertthat assert_that
 #' @importFrom shiny runApp
-start_n2k_index <- function() {
+#' @param local.path the path to store the local datawarehouse
+start_n2k_index <- function(local.path = "~/analysis/n2kreport.sqlite") {
   app.dir <- system.file("shiny", "n2k_index", package = "n2kreport")
   # nocov start
   if (app.dir == "") {
@@ -14,5 +15,9 @@ start_n2k_index <- function() {
     )
   }
   # nocov end
+  refresh_persisent(
+    remote.db = connect_remote(),
+    local.db = connect_local(path = local.path)
+  )
   runApp(app.dir, display.mode = "normal", launch.browser = TRUE) #nocov
 }

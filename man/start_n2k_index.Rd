@@ -4,7 +4,10 @@
 \alias{start_n2k_index}
 \title{Start the n2k_index Shiny app}
 \usage{
-start_n2k_index()
+start_n2k_index(local.path = "~/analysis/n2kreport.sqlite")
+}
+\arguments{
+\item{local.path}{the path to store the local datawarehouse}
 }
 \description{
 The n2k_index app display indices from the Natura 2000 monitoring
