@@ -90,6 +90,7 @@ AS
     Fingerprint,
     AnalysisDate,
     Status,
+    StatusFingerprint,
     ID
   FROM
     cteSpeciesGroup
