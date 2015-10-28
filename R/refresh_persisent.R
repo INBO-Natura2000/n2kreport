@@ -9,6 +9,7 @@
 #' @importFrom DBI dbWriteTable
 refresh_persisent <- function(remote.db, local.db){
   assert_that(inherits(remote.db, "RODBC"))
+  assert_that(inherits(local.db, "DBIConnection"))
 
   # nocov start
   composite.index <- import_composite_index(channel = remote.db)
