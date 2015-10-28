@@ -9,7 +9,7 @@
 #' @param title an optional title
 #' @export
 #' @importFrom assertthat assert_that is.flag noNA is.number is.string
-#' @importFrom ggplot2 ggplot aes_string geom_hline geom_errorbar geom_point
+#' @importFrom ggplot2 ggplot aes_string geom_hline geom_ribbon geom_line
 #'    scale_x_continuous scale_y_continuous ggtitle
 #' @importFrom scales percent
 gg_index <- function(
@@ -37,11 +37,11 @@ gg_index <- function(
   )
   if (!missing(baseline)) {
     assert_that(is.number(baseline))
-    p <- p + geom_hline(yintercept = baseline, linetype = 3)
+    p <- p + geom_hline(yintercept = baseline, linetype = 2)
   }
   p <- p +
-    geom_errorbar() +
-    geom_point()
+    geom_ribbon(alpha = 0.1) +
+    geom_line()
   if (missing(breaks)) {
     p <- p + scale_x_continuous("")
   } else {
