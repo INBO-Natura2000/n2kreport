@@ -19,5 +19,12 @@ refresh_persisent <- function(remote.db, local.db){
     value = composite.index,
     overwrite = TRUE
   )
+  index <- import_index(channel = remote.db)
+  dbWriteTable(
+    conn = local.db,
+    name = "SpeciesIndex",
+    value = index,
+    overwrite = TRUE
+  )
   # nocov end
 }
