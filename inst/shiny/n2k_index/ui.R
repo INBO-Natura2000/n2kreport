@@ -5,15 +5,15 @@ fluidPage(
       2,
       uiOutput("ui"),
       sliderInput(
-        "imageSize",
-        "plot size",
+        inputId = "imageSize",
+        label = "plot size",
         min = 100,
         max = 1000,
         value = 600
       ),
       sliderInput(
-        "baseSize",
-        "font size",
+        inputId = "baseSize",
+        label = "font size",
         min = 1,
         max = 30,
         value = 16
@@ -28,15 +28,15 @@ fluidPage(
         downloadButton("downloadImage", "This index"),
         downloadButton("downloadImageAll", "All indices"),
         sliderInput(
-          "plotWidth",
-          "image width (cm)",
+          inputId = "plotWidth",
+          label = "image width (cm)",
           min = 1,
           max = 50,
           value = 10
         ),
         sliderInput(
-          "plotHeight",
-          "image height (cm)",
+          inputId = "plotHeight",
+          label = "image height (cm)",
           min = 1,
           max = 50,
           value = 10

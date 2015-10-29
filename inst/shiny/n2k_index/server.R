@@ -6,15 +6,15 @@ shinyServer(function(input, output) {
   species <- read_species(connection = local.db)
   output$ui <- renderUI({
     list(
-        selectInput(
-        "SpeciesGroup",
-        "Species group",
+      selectInput(
+        inputId = "SpeciesGroup",
+        label = "Species group",
         choices = species$SpeciesGroup,
         selected = species$Species[1]
       ),
       radioButtons(
-        "YearCycle",
-        "Frequency",
+        inputId = "YearCycle",
+        label = "Frequency",
         choices = c(Year = "fYear", Cycle = "fCycle"),
         selected = "fYear"
       )
