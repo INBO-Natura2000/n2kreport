@@ -4,6 +4,7 @@
 #' @export
 #' @importFrom assertthat assert_that
 #' @importFrom shiny runApp
+#' @importFrom RODBC odbcClose
 #' @param local.path the path to store the local datawarehouse
 start_n2k_index <- function(local.path = "~/analysis/n2kreport.sqlite") {
   app.dir <- system.file("shiny", "n2k_index", package = "n2kreport")
@@ -19,5 +20,6 @@ start_n2k_index <- function(local.path = "~/analysis/n2kreport.sqlite") {
     remote.db = connect_remote(),
     local.db = connect_local(path = local.path)
   )
+  odbcClose(remote.db)
   runApp(app.dir, display.mode = "normal", launch.browser = TRUE) #nocov
 }
