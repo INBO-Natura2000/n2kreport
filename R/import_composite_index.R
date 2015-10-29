@@ -125,10 +125,16 @@ LEFT JOIN
   ON
 cteAnalysis.ID = ParameterEstimate.AnalysisID
   "
-  sqlQuery(
+  composite.index <- sqlQuery(
     channel = channel,
     query = sql,
     stringsAsFactors = FALSE
   )
+  composite.index$ModelType <- gsub(
+    "^composite index: ",
+    "",
+    composite.index$ModelType
+  )
+  return(composite.index)
   # nocov end
 }

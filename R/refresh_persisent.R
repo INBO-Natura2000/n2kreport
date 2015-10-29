@@ -13,11 +13,6 @@ refresh_persisent <- function(remote.db, local.db){
 
   # nocov start
   composite.index <- import_composite_index(channel = remote.db)
-  composite.index$ModelType <- gsub(
-    "composite index: ",
-    "",
-    composite.index$ModelType
-  )
   dbWriteTable(
     conn = local.db,
     name = "CompositeIndex",
