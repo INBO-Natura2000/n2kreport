@@ -7,7 +7,7 @@
 #' @param connection A DBI connection to the dummy database. Defaults to an in
 #'   memory SQLite database
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr %>% mutate_ n
+#' @importFrom dplyr %>% mutate_ n rowwise
 #' @importFrom DBI dbWriteTable
 create_dummy_db <- function(connection){
   assert_that(inherits(connection, "DBIConnection"))
@@ -24,6 +24,11 @@ create_dummy_db <- function(connection){
       LCL = ~ Estimate - Error,
       UCL = ~ Estimate + Error
     ) %>%
+    rowwise() %>%
+    mutate_(
+      Fingerprint = ~get_sha1(c(Scheme, ModelType, SpeciesGroup))
+    ) %>%
+    as.data.frame() %>%
     dbWriteTable(
       conn = connection,
       name = "CompositeIndex"
