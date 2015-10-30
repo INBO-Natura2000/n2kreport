@@ -36,8 +36,10 @@ shinyServer(function(input, output) {
       "fYear",
       input$comp.YearCycle
     )
-    read_index(
+    index <- read_index(
       connection = local.db,
+      table = "SpeciesIndex",
+      variable = "SpeciesGroup",
       species = comp.species.group,
       frequency = comp.year.cycle
     )

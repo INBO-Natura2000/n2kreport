@@ -38,6 +38,8 @@ shinyServer(function(input, output) {
     )
     read_index(
       connection = local.db,
+      table = "CompositeIndex",
+      variable = "SpeciesGroup",
       species = comp.species.group,
       frequency = comp.year.cycle
     )

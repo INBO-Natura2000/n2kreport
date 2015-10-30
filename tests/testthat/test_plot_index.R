@@ -2,6 +2,8 @@ context("plot_index")
 connection <- connect_local(dummy.path)
 index <- read_index(
   connection = connection,
+  table = "CompositeIndex",
+  variable = "SpeciesGroup",
   species = "A",
   frequency = "fYear"
 )
@@ -53,6 +55,8 @@ expect_error(
 
 index <- read_index(
   connection = connection,
+  table = "CompositeIndex",
+  variable = "SpeciesGroup",
   species = "A",
   frequency = "fCycle"
 )

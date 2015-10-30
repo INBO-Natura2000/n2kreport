@@ -2,6 +2,8 @@ context("export_plot")
 connection <- connect_local(dummy.path)
 index <- read_index(
   connection = connection,
+  table = "CompositeIndex",
+  variable = "SpeciesGroup",
   species = "A",
   frequency = "fYear"
 )

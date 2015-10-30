@@ -4,10 +4,14 @@
 \alias{read_index}
 \title{read the required indices}
 \usage{
-read_index(connection, species, frequency)
+read_index(connection, table, variable, species, frequency)
 }
 \arguments{
 \item{connection}{An open connection to the SQLite database}
+
+\item{table}{the table in which the species are stored}
+
+\item{variable}{the column in which the species are stored}
 
 \item{species}{the ID of the relevant species}
 
