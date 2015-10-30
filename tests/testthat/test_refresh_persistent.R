@@ -15,7 +15,7 @@ describe("refresh persistent storage()", {
 
     expect_identical(
       DBI::dbListTables(local.db),
-      c("CompositeIndex")
+      c("CompositeIndex", "SpeciesIndex")
     )
   })
   if (class(remote.db) == "RODBC") {
