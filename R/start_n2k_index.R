@@ -16,8 +16,9 @@ start_n2k_index <- function(local.path = "~/analysis/n2kreport.sqlite") {
     )
   }
   # nocov end
+  remote.db <- connect_remote()
   refresh_persisent(
-    remote.db = connect_remote(),
+    remote.db = remote.db,
     local.db = connect_local(path = local.path)
   )
   odbcClose(remote.db)
