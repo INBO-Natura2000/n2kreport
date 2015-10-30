@@ -34,7 +34,7 @@ export_plot_zip <- function(
       height = height
     )
   }
-  zip(zipfile = zipfile, files = to.do$file)
+  zip(zipfile = zipfile, files = to.do$file, flags = "-q")
   setwd(current.wd)
   return(zipfile)
 }
