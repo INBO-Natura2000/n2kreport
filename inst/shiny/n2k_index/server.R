@@ -3,7 +3,11 @@ require(n2kreport)
 shinyServer(function(input, output) {
   local.db <- connect_local()
 
-  comp.species <- read_species(connection = local.db)
+  comp.species <- read_species(
+    connection = local.db,
+    table = "SpeciesIndex",
+    variable = "SpeciesGroup"
+  )
   output$comp.ui <- renderUI({
     list(
       selectInput(

@@ -4,10 +4,14 @@
 \alias{read_species}
 \title{Get a list of the available species}
 \usage{
-read_species(connection)
+read_species(connection, table, variable)
 }
 \arguments{
 \item{connection}{An open connection to the SQLite database}
+
+\item{table}{the table in which the species are stored}
+
+\item{variable}{the column in which the species are stored}
 }
 \description{
 Get a list of the available species
