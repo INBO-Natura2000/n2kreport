@@ -3,16 +3,16 @@ fluidPage(
   fluidRow(
     column(
       2,
-      uiOutput("ui"),
+      uiOutput("comp.ui"),
       sliderInput(
-        inputId = "imageSize",
+        inputId = "comp.imageSize",
         label = "plot size",
         min = 100,
         max = 1000,
         value = 600
       ),
       sliderInput(
-        inputId = "baseSize",
+        inputId = "comp.baseSize",
         label = "font size",
         min = 1,
         max = 30,
@@ -20,22 +20,22 @@ fluidPage(
       ),
       wellPanel(
         p(strong("Download data")),
-        downloadButton("downloadData", "This index"),
-        downloadButton("downloadDataAll", "All indices")
+        downloadButton(outputId = "comp.downloadData", label = "This index"),
+        downloadButton(outputId = "comp.downloadDataAll", label = "All indices")
       ),
       wellPanel(
         p(strong("Download image")),
         downloadButton("downloadImage", "This index"),
         downloadButton("downloadImageAll", "All indices"),
         sliderInput(
-          inputId = "plotWidth",
+          inputId = "comp.plotWidth",
           label = "image width (cm)",
           min = 1,
           max = 50,
           value = 10
         ),
         sliderInput(
-          inputId = "plotHeight",
+          inputId = "comp.plotHeight",
           label = "image height (cm)",
           min = 1,
           max = 50,
@@ -45,8 +45,8 @@ fluidPage(
     ),
     column(
       10,
-      htmlOutput("analysisID"),
-      uiOutput("plotIndex")
+      htmlOutput("comp.analysisID"),
+      uiOutput("comp.plotIndex")
     )
   )
 )
