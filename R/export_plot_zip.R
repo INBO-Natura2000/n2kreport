@@ -9,6 +9,8 @@
 export_plot_zip <- function(
   zipfile,
   connection,
+  table,
+  variable,
   base_size = 12,
   width = 10,
   height = 10
@@ -20,11 +22,12 @@ export_plot_zip <- function(
 
   current.wd <- getwd()
   setwd(tempdir())
-  to.do <- export_index(connection) %>%
-    group_by_(~ModelType, ~SpeciesGroup, ~Fingerprint) %>%
+  to.do <- export_index(connection, table = table) %>%
+    group_by_(~ModelType, variable, ~Fingerprint) %>%
     do(p = plot_index(., base_size = base_size)) %>%
     mutate_(
-      file = ~paste0(SpeciesGroup, "_",  ModelType, "_", Fingerprint, ".png")
+      tmp = variable,
+      file = ~paste0(tmp, "_",  ModelType, "_", Fingerprint, ".png")
     )
   for (i in seq_along(to.do$file)) {
     export_plot(

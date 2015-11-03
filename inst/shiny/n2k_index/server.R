@@ -134,6 +134,8 @@ shinyServer(function(input, output) {
       export_plot_zip(
         zipfile = file,
         connection = local.db,
+        table = "SpeciesIndex",
+        variable = "SpeciesGroup",
         base_size = input$comp.baseSize,
         width = input$comp.plotWidth,
         height = input$plotHeight
