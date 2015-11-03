@@ -127,7 +127,7 @@ shinyServer(function(input, output) {
 
   output$comp.downloadImageAll <- downloadHandler(
     filename = function() {
-      sha1 <- get_sha1(export_index(local.db))
+      sha1 <- get_sha1(export_index(local.db, table = "CompositeIndex"))
       paste0("comp_index_",  sha1, ".zip")
     },
     content = function(file) {

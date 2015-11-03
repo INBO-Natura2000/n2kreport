@@ -127,8 +127,8 @@ shinyServer(function(input, output) {
 
   output$comp.downloadImageAll <- downloadHandler(
     filename = function() {
-      sha1 <- get_sha1(export_index(local.db))
       paste0("comp_index_",  sha1, ".zip")
+      sha1 <- get_sha1(export_index(local.db, table = "SpeciesIndex"))
     },
     content = function(file) {
       export_plot_zip(

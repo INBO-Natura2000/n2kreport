@@ -5,6 +5,6 @@ expect_error(
 )
 connection <- connect_local(dummy.path)
 expect_is(
-  export_index(connection),
+  export_index(connection, "CompositeIndex"),
   "data.frame"
 )

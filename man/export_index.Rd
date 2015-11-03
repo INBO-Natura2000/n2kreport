@@ -4,10 +4,12 @@
 \alias{export_index}
 \title{Prepare indices for export}
 \usage{
-export_index(connection)
+export_index(connection, table)
 }
 \arguments{
 \item{connection}{An open connection to the SQLite database}
+
+\item{table}{the table in which the species are stored}
 }
 \description{
 Prepare indices for export
