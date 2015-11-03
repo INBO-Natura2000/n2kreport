@@ -16,11 +16,13 @@ start_n2k_index <- function(local.path = "~/analysis/n2kreport.sqlite") {
     )
   }
   # nocov end
-  remote.db <- connect_remote()
-  refresh_persisent(
-    remote.db = remote.db,
-    local.db = connect_local(path = local.path)
-  )
-  odbcClose(remote.db)
+  remote.db <- try(connect_remote())
+  if (inherits(remote.db, "RODBC")) {
+    refresh_persisent(
+      remote.db = remote.db,
+      local.db = connect_local(path = local.path)
+    )
+    odbcClose(remote.db)
+  }
   runApp(app.dir, display.mode = "normal", launch.browser = TRUE) #nocov
 }
