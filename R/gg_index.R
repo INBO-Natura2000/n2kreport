@@ -31,6 +31,9 @@ gg_index <- function(
     index$LCL <- exp(index$LCL)
     index$UCL <- exp(index$UCL)
   }
+  index$ShortFingerprint <- factor(
+    substring(index$Fingerprint, 1, 10)
+  )
   p <- ggplot(
     index,
     aes_string(x = "Period", y = "Estimate", ymin = "LCL", ymax = "UCL")
@@ -40,8 +43,11 @@ gg_index <- function(
     p <- p + geom_hline(yintercept = baseline, linetype = 2)
   }
   p <- p +
-    geom_ribbon(alpha = 0.1) +
+    geom_ribbon(alpha = 0.2) +
     geom_line()
+  if (length(unique(index$Fingerprint)) > 1) {
+    p <- p + facet_wrap(~ShortFingerprint, scales = "free_y")
+  }
   if (missing(breaks)) {
     p <- p + scale_x_continuous("")
   } else {
