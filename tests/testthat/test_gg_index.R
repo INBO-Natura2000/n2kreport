@@ -4,7 +4,8 @@ junk <- "abc"
 index <- data.frame(
   Period = seq_len(n),
   Estimate = runif(n),
-  Error = runif(n)
+  Error = runif(n),
+  Fingerprint = "A"
 )
 index$LCL <- index$Estimate - index$Error
 index$UCL <- index$Estimate + index$Error
