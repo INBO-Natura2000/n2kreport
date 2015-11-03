@@ -10,7 +10,7 @@
 #' @export
 #' @importFrom assertthat assert_that is.flag noNA is.number is.string
 #' @importFrom ggplot2 ggplot aes_string geom_hline geom_ribbon geom_line
-#'    scale_x_continuous scale_y_continuous ggtitle
+#'    scale_x_continuous scale_y_continuous ggtitle facet_wrap
 #' @importFrom scales percent
 gg_index <- function(
   index,
