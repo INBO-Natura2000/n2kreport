@@ -43,6 +43,7 @@ shinyServer(function(input, output) {
       species = species.group,
       frequency = year.cycle
     )
+    set_reference(index)
   })
 
   analysis <- reactive({
