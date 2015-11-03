@@ -25,8 +25,8 @@ fluidPage(
       ),
       wellPanel(
         p(strong("Download image")),
-        downloadButton("downloadImage", "This index"),
-        downloadButton("downloadImageAll", "All indices"),
+        downloadButton("comp.downloadImage", "This index"),
+        downloadButton("comp.downloadImageAll", "All indices"),
         sliderInput(
           inputId = "comp.plotWidth",
           label = "image width (cm)",

@@ -118,7 +118,7 @@ shinyServer(function(input, output) {
     content = function(file) {
       export_plot(
         file = file,
-        plot = plot_index(index(), base_size = input$comp.baseSize),
+        plot = plot_index(comp.index(), base_size = input$comp.baseSize),
         width = input$comp.plotWidth,
         height = input$comp.plotHeight
       )
@@ -138,7 +138,7 @@ shinyServer(function(input, output) {
         variable = "SpeciesGroup",
         base_size = input$comp.baseSize,
         width = input$comp.plotWidth,
-        height = input$plotHeight
+        height = input$comp.plotHeight
       )
     }
   )
