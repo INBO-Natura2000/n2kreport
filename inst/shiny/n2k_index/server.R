@@ -3,21 +3,21 @@ require(n2kreport)
 shinyServer(function(input, output) {
   local.db <- connect_local()
 
-  comp.species <- read_species(
+  species <- read_species(
     connection = local.db,
     table = "SpeciesIndex",
     variable = "SpeciesGroup"
   )
-  output$comp.ui <- renderUI({
+  output$ui <- renderUI({
     list(
       selectInput(
-        inputId = "comp.SpeciesGroup",
+        inputId = "SpeciesGroup",
         label = "Species group",
-        choices = comp.species$SpeciesGroup,
-        selected = comp.species$Species[1]
+        choices = species$SpeciesGroup,
+        selected = species$Species[1]
       ),
       radioButtons(
-        inputId = "comp.YearCycle",
+        inputId = "YearCycle",
         label = "Frequency",
         choices = c(Year = "fYear", Cycle = "fCycle"),
         selected = "fYear"
@@ -25,110 +25,110 @@ shinyServer(function(input, output) {
     )
   })
 
-  comp.index <- reactive({
-    comp.species.group <- ifelse(
-      is.null(input$comp.SpeciesGroup),
-      comp.species$Species[1],
-      input$comp.SpeciesGroup
+  index <- reactive({
+    species.group <- ifelse(
+      is.null(input$SpeciesGroup),
+      species$Species[1],
+      input$SpeciesGroup
     )
-    comp.year.cycle <- ifelse(
-      is.null(input$comp.YearCycle),
+    year.cycle <- ifelse(
+      is.null(input$YearCycle),
       "fYear",
-      input$comp.YearCycle
+      input$YearCycle
     )
     index <- read_index(
       connection = local.db,
       table = "SpeciesIndex",
       variable = "SpeciesGroup",
-      species = comp.species.group,
-      frequency = comp.year.cycle
+      species = species.group,
+      frequency = year.cycle
     )
   })
 
-  comp.analysis <- reactive({
+  analysis <- reactive({
     paste(
-      substring(unique(comp.index()$Fingerprint), 1, 10),
+      substring(unique(index()$Fingerprint), 1, 10),
       collapse = "-"
     )
   })
 
-  output$comp.analysisID <- renderText({
+  output$analysisID <- renderText({
     paste(
       "<b>Analysis ID:</b>",
-      comp.analysis()
+      analysis()
     )
   })
 
 
-  output$comp.plotIndex <- renderUI({
+  output$plotIndex <- renderUI({
     plotOutput(
-      "comp.plot",
+      "plot",
       width = sprintf(
         "%.fpx",
-        input$comp.imageSize * input$comp.plotWidth / input$comp.plotHeight
+        input$imageSize * input$plotWidth / input$plotHeight
       ),
       height = sprintf(
         "%.fpx",
-        input$comp.imageSize * input$comp.plotHeight / input$comp.plotWidth
+        input$imageSize * input$plotHeight / input$plotWidth
       )
     )
   })
 
-  output$comp.plot <- renderPlot({
+  output$plot <- renderPlot({
     plot_index(
-      to.plot = comp.index(),
-      base_size = input$comp.baseSize
+      to.plot = index(),
+      base_size = input$baseSize
     )
   })
 
-  output$comp.downloadData <- downloadHandler(
+  output$downloadData <- downloadHandler(
     filename = function() {
       paste0(
-        "comp_index_",
-        input$comp.SpeciesGroup, "_",
-        input$comp.YearCycle, "_",
-        comp.analysis(),
+        "index_",
+        input$SpeciesGroup, "_",
+        input$YearCycle, "_",
+        analysis(),
         ".txt"
       )
     },
     content = function(file) {
-      write.table(comp.index(), file, sep = "\t", row.names = FALSE)
+      write.table(index(), file, sep = "\t", row.names = FALSE)
     }
   )
 
-  output$comp.downloadDataAll <- downloadHandler(
+  output$downloadDataAll <- downloadHandler(
     filename = function() {
-      "comp_index_all.txt"
+      "index_all.txt"
     },
     content = function(file) {
       write.table(export_index(local.db), file, sep = "\t", row.names = FALSE)
     }
   )
 
-  output$comp.downloadImage <- downloadHandler(
+  output$downloadImage <- downloadHandler(
     filename = function() {
       paste0(
-        "comp_index_",
-        input$comp.SpeciesGroup, "_",
-        input$comp.YearCycle, "_",
-        comp.analysis(),
+        "index_",
+        input$SpeciesGroup, "_",
+        input$YearCycle, "_",
+        analysis(),
         ".png"
       )
     },
     content = function(file) {
       export_plot(
         file = file,
-        plot = plot_index(index(), base_size = input$comp.baseSize),
-        width = input$comp.plotWidth,
-        height = input$comp.plotHeight
+        plot = plot_index(index(), base_size = input$baseSize),
+        width = input$plotWidth,
+        height = input$plotHeight
       )
     }
   )
 
-  output$comp.downloadImageAll <- downloadHandler(
+  output$downloadImageAll <- downloadHandler(
     filename = function() {
-      paste0("comp_index_",  sha1, ".zip")
       sha1 <- get_sha1(export_index(local.db, table = "SpeciesIndex"))
+      paste0("index_",  sha1, ".zip")
     },
     content = function(file) {
       export_plot_zip(
@@ -136,8 +136,8 @@ shinyServer(function(input, output) {
         connection = local.db,
         table = "SpeciesIndex",
         variable = "SpeciesGroup",
-        base_size = input$comp.baseSize,
-        width = input$comp.plotWidth,
+        base_size = input$baseSize,
+        width = input$plotWidth,
         height = input$plotHeight
       )
     }
