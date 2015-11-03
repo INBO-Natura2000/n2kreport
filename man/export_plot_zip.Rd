@@ -5,7 +5,7 @@
 \title{Export all indices as plots}
 \usage{
 export_plot_zip(zipfile, connection, table, variable, base_size = 12,
-  width = 10, height = 10)
+  width = 10, height = 10, reference = FALSE)
 }
 \arguments{
 \item{zipfile}{The pathname of the zip file: tilde expansion (see
@@ -22,6 +22,8 @@ export_plot_zip(zipfile, connection, table, variable, base_size = 12,
 \item{width}{the width in cm}
 
 \item{height}{the height in cm}
+
+\item{reference}{Use the first index as reference. Default = FALSE}
 }
 \description{
 Export all indices as plots

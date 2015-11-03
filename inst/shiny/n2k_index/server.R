@@ -93,7 +93,7 @@ shinyServer(function(input, output) {
       )
     },
     content = function(file) {
-      write.table(index(), file, sep = "\t", row.names = FALSE)
+      write.table(x = index(), file = file, sep = "\t", row.names = FALSE)
     }
   )
 
@@ -102,7 +102,13 @@ shinyServer(function(input, output) {
       "index_all.txt"
     },
     content = function(file) {
-      write.table(export_index(local.db), file, sep = "\t", row.names = FALSE)
+      write.table(
+        x = export_index(local.db, table = "SpeciesIndex") %>%
+          set_reference(),
+        file = file,
+        sep = "\t",
+        row.names = FALSE
+      )
     }
   )
 
@@ -128,7 +134,9 @@ shinyServer(function(input, output) {
 
   output$downloadImageAll <- downloadHandler(
     filename = function() {
-      sha1 <- get_sha1(export_index(local.db, table = "SpeciesIndex"))
+      sha1 <- export_index(local.db, table = "SpeciesIndex") %>%
+        set_reference() %>%
+        get_sha1()
       paste0("index_",  sha1, ".zip")
     },
     content = function(file) {
@@ -139,7 +147,8 @@ shinyServer(function(input, output) {
         variable = "SpeciesGroup",
         base_size = input$baseSize,
         width = input$plotWidth,
-        height = input$plotHeight
+        height = input$plotHeight,
+        reference = TRUE
       )
     }
   )
