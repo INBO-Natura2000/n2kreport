@@ -61,7 +61,7 @@ import_index <- function(channel){
     Estimate,
     LCL,
     UCL,
-    Analysis,
+    Analysis AS Fingerprint,
     Status,
     StatusFingerprint
   FROM
