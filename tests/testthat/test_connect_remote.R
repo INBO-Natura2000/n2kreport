@@ -27,8 +27,8 @@ describe("connect_remote", {
       RODBC::sqlTables(channel = channel),
       "data.frame"
     )
+    if (class(channel) == "RODBC") {
+      RODBC::odbcClose(channel)
+    }
   })
-  if (class(channel) == "RODBC") {
-    RODBC::odbcClose(channel)
-  }
 })
