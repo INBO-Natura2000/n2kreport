@@ -20,9 +20,9 @@ expect_error(
   "Production database not yet defined"
 )
 describe("connect_remote", {
-  expect_is(channel <- connect_remote(develop = TRUE), "RODBC")
   it("connect_remote opens the ODBC connection", {
     skip_on_cran()
+    expect_is(channel <- connect_remote(develop = TRUE), "RODBC")
     expect_is(
       RODBC::sqlTables(channel = channel),
       "data.frame"
